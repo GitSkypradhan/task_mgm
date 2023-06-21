@@ -1,0 +1,101 @@
+{% extends 'm_base.html' %}
+
+{% block title %} Employee Tasks {% endblock %}
+
+{% block content %}
+<!--number of tasks-->
+<div class="container pb-5 " style="height: 100vh;">
+    <div class="col-sm-10 offset-sm-2">
+        <h1 class="mt-1">Dashboard</h1>
+
+<!--        small cards-->
+
+        <div class="row mt-3 ">
+            {% for key,value in taskbox.items %}
+            <div class="col-md-4 ">
+                <div class="card ">
+                    <div class="card-body bg-warning ">
+                        <h5 class="card-title">{{key}}</h5>
+                        <p class="card-text" style="font-size:25px;">{{value}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+<!--<table here-->
+        <div class="row justify-content-end  mt-4">
+            <div class="col-md-7">
+                <form method="GET" action="">
+                    <!-- Search input -->
+                    <div class="input-group">
+                        <input type="text" name="q" value="{{query}}" placeholder="Search by name,date"
+                               class="form-control">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary ms-3 me-3 ">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-10 offset-md-2">
+        <!--        table starts here-->
+        <table class="table table-striped table-hover  table-lg mt-3 ">
+            <thead class="table-dark">
+            <tr class="text-center">
+                <th class="col-1">#</th>
+                <th class="col-8">Task</th>
+                <th class="col-2">Status</th>
+                <th class="col-1">Date</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td class="col-1">{{forloop.counter}}</td>
+                <td class="col-8"><b>{{task.title | capfirst}}</b></td>
+                <td class="col-1"><b>{{ task.status }}</b></td>
+                <td class="col-1">{{task.created_date |date:"SHORT_DATE_FORMAT" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5"><b>No tasks found.</b></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!--        pagintation here-->
+    <div class="col-md-12">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-sm justify-content-end">
+
+                {% if task_list.has_previous %}
+                <li class="page-item"><a class="page-link" href="/employee_list/{{userid}}?page=1">&laquoFirst</a></li>
+                <li class="page-item"><a class="page-link" href="/employee_list/{{userid}}?page={{task_list.previous_page_number}}">
+                    Previous</a></li>
+
+                {% endif %}
+
+                <li class="page-item"><a class="page-link disabled" href="#">Page {{task_list.number}} of
+                    {{task_list.paginator.num_pages}}</a></li>
+
+                {% if task_list.has_next %}
+                <li class="page-item"><a class="page-link" href="/employee_list/{{userid}}?page={{task_list.next_page_number}}">Next </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="/employee_list/{{userid}}?page={task_list.paginator.num_pages}}">Last
+                    &raquo</a></li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    </div>
+
+    <!--        table  end here-->
+</div>
+
+{%endblock%}
+
+

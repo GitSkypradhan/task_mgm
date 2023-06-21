@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New User</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+</head>
+<body class="bg-secondary">
+
+
+{% if form.errors %}
+
+<div class="alert alert-danger alert-{{message.tags}} alert-dismissible fade show mt-2 w-50" role="alert">
+     <ul class="errorlist">
+    {% for field_errors in form.errors.values %}
+      {% for error in field_errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    {% endfor %}
+  </ul>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+<div class="card p-2 w-50" style="width: 20rem;">
+  <div class="col">
+    <h2>Register User</h2>
+  <form method="POST">
+      <div class="form-group">
+    {% csrf_token %}
+
+          <label>{{form.first_name.label_tag}}</label>
+           {{form.first_name}}
+          <label>{{form.role.label_tag}}</label>
+          {{form.role}}
+          <br><br>
+          <label>{{form.email.label_tag }}</label>
+          {{form.email}}
+          <br><br>
+          <label>{{ form.username.label_tag }}</label>
+          {{ form.username }}
+          <br><br>
+          <label>{{ form.password1.label_tag }}</label>
+          {{ form.password1 }}
+          <br><br>
+          <label>{{ form.password2.label_tag }}</label>
+          {{ form.password2 }}
+          <br><br>
+
+  <button class="btn btn-primary" type="submit">Register</button>
+  <a href="/manager_dash/" class="btn btn-secondary" type="">Back</a>
+
+      </div>
+  </form>
+</div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
