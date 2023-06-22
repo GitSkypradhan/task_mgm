@@ -6,7 +6,7 @@
 <!--number of tasks-->
 <div class="container pb-5 " style="height: 100vh;">
     <div class="col-sm-10 offset-sm-2">
-        <h1 class="mt-1">Dashboard</h1>
+        <h1 class="mt-1">Task Details.</h1>
 
 <!--        small cards-->
 
@@ -46,7 +46,8 @@
             <tr class="text-center">
                 <th class="col-1">#</th>
                 <th class="col-8">Task</th>
-                <th class="col-2">Status</th>
+                <th class="col-1">Status</th>
+                <th class="col-1">User</th>
                 <th class="col-1">Date</th>
             </tr>
             </thead>
@@ -57,6 +58,7 @@
                 <td class="col-1">{{forloop.counter}}</td>
                 <td class="col-8"><b>{{task.title | capfirst}}</b></td>
                 <td class="col-1"><b>{{ task.status }}</b></td>
+                <td class="col-1"><b>{{task.user }}</b></td>
                 <td class="col-1">{{task.created_date |date:"SHORT_DATE_FORMAT" }}</td>
             </tr>
             {% empty %}
@@ -72,9 +74,11 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination pagination-sm justify-content-end">
 
-                {% if task_list.has_previous %}
-                <li class="page-item"><a class="page-link" href="/employee_list/{{userid}}?page=1">&laquoFirst</a></li>
-                <li class="page-item"><a class="page-link" href="/employee_list/{{userid}}?page={{task_list.previous_page_number}}">
+
+
+                   {% if task_list.has_previous %}
+                <li class="page-item"><a class="page-link" href="/task_list/employee_list/{{userid}}/?page=1">&laquoFirst</a></li>
+                <li class="page-item"><a class="page-link" href="/task_list/employee_list/{{userid}}/?page={{task_list.previous_page_number}}">
                     Previous</a></li>
 
                 {% endif %}
@@ -83,11 +87,12 @@
                     {{task_list.paginator.num_pages}}</a></li>
 
                 {% if task_list.has_next %}
-                <li class="page-item"><a class="page-link" href="/employee_list/{{userid}}?page={{task_list.next_page_number}}">Next </a>
+                <li class="page-item"><a class="page-link" href="/task_list/employee_list/{{userid}}/?page={{task_list.next_page_number}}">Next </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="/employee_list/{{userid}}?page={task_list.paginator.num_pages}}">Last
+                <li class="page-item"><a class="page-link" href="/task_list/employee_list/{{userid}}/?page={task_list.paginator.num_pages}}">Last
                     &raquo</a></li>
                 {% endif %}
+
 
             </ul>
         </nav>

@@ -26,7 +26,7 @@
             <a class="btn btn-sm btn-primary" href="{% url 'logout' %}">Logout</a>
         </li>
         <li class="nav-item ">
-            <a class="nav-link text-light" href="/manager_dash/">Home</a>
+            <a class="nav-link text-light" href="{% url 'manager_dash' %}">Home</a>
         </li>
         <a class="nav-link text-light" href="{% url 'register' %}">User Registration</a>
         </li>
@@ -41,7 +41,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
                      {% for user in users%}
-                    <li><a class="dropdown-item" href="/employee_list/{{user.id}}">{{user.username| capfirst}}</a></li>
+                    <li><a class="dropdown-item" href="{% url 'employee_list' user.id %}">{{user.username| capfirst}}</a></li>
                     {% endfor %}
                 </ul>
             </div>

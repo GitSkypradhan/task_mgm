@@ -22,7 +22,7 @@ def login_user(request):
             if user.role == 'manager':
                 return redirect('manager_dash')
             if user.role == 'employee':
-                return redirect("/")
+                return redirect('task_list')
         else:
             messages.error(request,"Invalid username or password.")
 
