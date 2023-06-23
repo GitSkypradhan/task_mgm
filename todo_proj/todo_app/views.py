@@ -14,6 +14,7 @@ from django.shortcuts import get_object_or_404
 @login_required
 def task_list(request):
     query = request.GET.get('q')
+    task_list = ''
     if query:
         task = Task.objects.filter(Q(title__icontains=query) | Q(created_date__icontains=query))
 
@@ -84,16 +85,18 @@ def manager_dash(request):
 def employee_list(request, userid):
     users = User.objects.values('id', 'username', 'role').filter(role='employee')
     query = request.GET.get('q')
+    total_tasks = Task.objects.filter(user=userid).count()
+    pending_tasks = Task.objects.filter(user=userid,status='pending').count()
+    compeleted_tasks = Task.objects.filter(user=userid,status='completed').count()
+    taskbox = {'Total_tasks':total_tasks,'Pending_tasks':pending_tasks,'Completed_tasks':compeleted_tasks}
+    task_list = ""
+
     if query:
         task = Task.objects.filter(Q(title__icontains=query) | Q(created_date__icontains=query))
 
     else:
         # query : select task by user logged in and order by date descending
         task = Task.objects.filter(user=userid).order_by('-created_date')
-        total_tasks = task.count()
-        pending_tasks = Task.objects.filter(user=userid,status='pending').count()
-        compeleted_tasks = Task.objects.filter(user=userid,status='completed').count()
-        taskbox = {'Total_tasks':total_tasks,'Pending_tasks':pending_tasks,'Completed_tasks':compeleted_tasks}
         items_per_page = 5
         paginator = Paginator(task, items_per_page)
         page_num = request.GET.get('page')
